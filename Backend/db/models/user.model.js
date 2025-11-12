@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema({
         },
         lastname: {
             type: String,
-            required: true,
             minlength:[3,'Minimum 3 characters required']
         }
     },
@@ -32,7 +31,7 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.methods.generateAuthToken = function() {
-    const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET);
+    const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET, { expiresIn: '24h' });
     return token;
 }
 
